@@ -12,4 +12,5 @@ jobs:
     - name: Test CLI
       env:
         DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
-      run: doppler -p ${{ secrets.DOPPLER_IMPORT_PROJECT }} -c ${{ secrets.DOPPLER_IMPORT_CONFIG }} secrets upload <(echo '${{ toJson(secrets) }}')
+        ALL_SECRETS: ${{ toJson(secrets) }}
+      run: doppler -p ${{ secrets.DOPPLER_IMPORT_PROJECT }} -c ${{ secrets.DOPPLER_IMPORT_CONFIG }} secrets upload <(echo "$ALL_SECRETS")
