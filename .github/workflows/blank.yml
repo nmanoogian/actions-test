@@ -17,4 +17,4 @@ jobs:
         MULTI_LINE: ${{ secrets.MULTI_LINE }}
         MY_SECRET: ${{ secrets.MY_SECRET }}
         SINGLE_QUOTE: ${{ secrets.SINGLE_QUOTE }}
-      run: doppler -p ${{ secrets.DOPPLER_IMPORT_PROJECT }} -c ${{ secrets.DOPPLER_IMPORT_CONFIG }} secrets upload <(echo "$ALL_SECRETS")
+      run: doppler -p ${{ secrets.DOPPLER_IMPORT_PROJECT }} -c ${{ secrets.DOPPLER_IMPORT_CONFIG }} secrets upload <(env)
