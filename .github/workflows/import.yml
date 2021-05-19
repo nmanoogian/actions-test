@@ -15,4 +15,4 @@ jobs:
       env:
         DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
         ALL_SECRETS: ${{ toJson(secrets) }}
-      run: echo "$ALL_SECRETS" && doppler -p ${{ secrets.DOPPLER_IMPORT_PROJECT }} -c ${{ secrets.DOPPLER_IMPORT_CONFIG }} secrets upload <(echo "$ALL_SECRETS" | jq 'del(.GITHUB_TOKEN, .DOPPLER_TOKEN, .DOPPLER_IMPORT_CONFIG, .DOPPLER_IMPORT_PROJECT)')
+      run: doppler -p ${{ secrets.DOPPLER_IMPORT_PROJECT }} -c ${{ secrets.DOPPLER_IMPORT_CONFIG }} secrets upload <(echo "$ALL_SECRETS" | jq 'del(.github_token, .DOPPLER_TOKEN, .DOPPLER_IMPORT_CONFIG, .DOPPLER_IMPORT_PROJECT)')
