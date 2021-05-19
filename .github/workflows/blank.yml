@@ -1,4 +1,6 @@
   
+# Assumes DOPPLER_TOKEN, DOPPLER_IMPORT_PROJECT, and DOPPLER_IMPORT_CONFIG are all set
+
 name: Import Secrets
 
 on: [push]
