@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: Install CLI
       uses: dopplerhq/cli-action@v1
-    - name: Test CLI
+    - name: Import Secrets
       env:
         DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
         ALL_SECRETS: ${{ toJson(secrets) }}
