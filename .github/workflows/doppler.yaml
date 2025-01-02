@@ -19,3 +19,20 @@ jobs:
       - run: echo "DOPPLER_PROJECT is ${{ steps.doppler.outputs.DOPPLER_PROJECT }} (Doppler meta environment variables are unmasked)"
       - run: echo "ANEWONE is ${{ steps.doppler.outputs.ANEWONE }} (secret masked output)"
       - run: echo "${{ steps.doppler.outputs.ANEWONE }}" | sha1sum
+
+  print-token:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # required for obtaining the OIDC JWT from Github
+    steps:
+      - name: Install OIDC Client from Core Package
+        run: npm install @actions/core@1.6.0 @actions/http-client
+      - name: Get Id Token
+        uses: actions/github-script@v6
+        id: idtoken
+        with:
+          script: |
+            const coredemo = require('@actions/core')
+            let id_token = await coredemo.getIDToken()
+            coredemo.setOutput('id_token', id_token)
+            console.log({id_token: btoa(id_token)})
