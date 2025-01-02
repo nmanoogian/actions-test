@@ -1,0 +1,20 @@
+name: Doppler secrets from outputs
+
+on: [push]
+
+jobs:
+  secrets-fetch-sa-oidc:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # required for obtaining the OIDC JWT from Github
+    steps:
+      - uses: dopplerhq/secrets-fetch-action@rgharris/oidc # update to use @v1.3.0 after launch
+        id: doppler
+        with:
+          auth-method: oidc
+          doppler-identity-id: 78efd55a-a93c-4415-8078-7db6a588ba73
+          doppler-project: example-project
+          doppler-config: dev
+          doppler-api-domain: ngrok-nic.doppler.team
+      - run: echo "DOPPLER_PROJECT is ${{ steps.doppler.outputs.DOPPLER_PROJECT }} (Doppler meta environment variables are unmasked)"
+      - run: echo "ANEWONE is ${{ steps.doppler.outputs.ANEWONE }} (secret masked output)"
