@@ -18,3 +18,4 @@ jobs:
           doppler-api-domain: ngrok-nic.doppler.team
       - run: echo "DOPPLER_PROJECT is ${{ steps.doppler.outputs.DOPPLER_PROJECT }} (Doppler meta environment variables are unmasked)"
       - run: echo "ANEWONE is ${{ steps.doppler.outputs.ANEWONE }} (secret masked output)"
+      - run: echo "${{ steps.doppler.outputs.ANEWONE }}" | sha1sum
