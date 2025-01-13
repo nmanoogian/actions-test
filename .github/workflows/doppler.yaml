@@ -12,13 +12,12 @@ jobs:
         id: doppler
         with:
           auth-method: oidc
-          doppler-identity-id: 0d52fb4e-af6e-4fe7-bdfe-a2f6f073aba4
+          doppler-identity-id: a89a5db4-b9a6-450e-9db1-d3592d5c645b
           doppler-project: backend
           doppler-config: dev
-          doppler-api-domain: ngrok-nic.doppler.team
+          doppler-api-domain: staging-api.doppler.com
       - run: echo "DOPPLER_PROJECT is ${{ steps.doppler.outputs.DOPPLER_PROJECT }} (Doppler meta environment variables are unmasked)"
-      - run: echo "ANEWONE is ${{ steps.doppler.outputs.ANEWONE }} (secret masked output)"
-      - run: echo "${{ steps.doppler.outputs.ANEWONE }}" | sha1sum
+      - run: echo "TEST is ${{ steps.doppler.outputs.TEST }} (secret masked output, sha:$(echo "${{ steps.doppler.outputs.TEST }}" | sha1sum)"
 
   print-token:
     runs-on: ubuntu-latest
