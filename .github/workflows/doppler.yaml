@@ -19,24 +19,20 @@ jobs:
       - run: echo "DOPPLER_PROJECT is ${{ steps.doppler.outputs.DOPPLER_PROJECT }} (Doppler meta environment variables are unmasked)"
       - run: echo "TEST is ${{ steps.doppler.outputs.TEST }} (secret masked output, sha:$(echo "${{ steps.doppler.outputs.TEST }}" | sha1sum)"
 
-  print-token:
+  doppler-cli-oidc:
     runs-on: ubuntu-latest
     permissions:
       id-token: write # required for obtaining the OIDC JWT from Github
     steps:
-      - name: Install OIDC Client from Core Package
-        run: npm install @actions/core@1.6.0 @actions/http-client axios
-      - name: Get Id Token
+      - name: Get OIDC Token
         uses: actions/github-script@v6
-        id: idtoken
+        id: get-oidc-token
         with:
           script: |
-            const axios = require("axios")
-            const coredemo = require('@actions/core')
-            let id_token = await coredemo.getIDToken()
-
-            const https = require('https');
-
-            axios.post('https://ngrok-nic.doppler.team', {
-              'id_token' : id_token,
-            }).then(response => console.log(response.data));
+            const core = require('@actions/core')
+            const id_token = await core.getIDToken()
+            core.setOutput('oidc_token', id_token)
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v3
+      - run: doppler oidc login --api-host https://staging-api.doppler.com --scope=. --identity=a89a5db4-b9a6-450e-9db1-d3592d5c645b --token=${{ steps.get-oidc-token.outputs.oidc_token }}
+      - run: doppler projects
