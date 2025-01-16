@@ -35,6 +35,6 @@ jobs:
             const id_token = await gh.getIDToken()
             core.setOutput('oidc_token', id_token)
       - name: Install Doppler CLI
-        uses: dopplerhq/cli-action@v3
-      - run: doppler oidc login --api-host https://staging-api.doppler.com --scope=. --identity=a89a5db4-b9a6-450e-9db1-d3592d5c645b --token=${{ steps.get-oidc-token.outputs.oidc_token }}
-      - run: doppler projects
+        run: curl -L -o artifact.zip https://github.com/DopplerHQ/cli/actions/runs/12601461455/artifacts/2383729800 && unzip artifact.zip && chmod +x ./doppler
+      - run: ./doppler oidc login --api-host https://staging-api.doppler.com --scope=. --identity=a89a5db4-b9a6-450e-9db1-d3592d5c645b --token=${{ steps.get-oidc-token.outputs.oidc_token }}
+      - run: ./doppler projects
