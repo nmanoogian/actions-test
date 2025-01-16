@@ -29,8 +29,8 @@ jobs:
         id: get-oidc-token
         with:
           script: |
-            const core = require('@actions/core')
-            const id_token = await core.getIDToken()
+            const gh = require('@actions/core')
+            const id_token = await gh.getIDToken()
             core.setOutput('oidc_token', id_token)
       - name: Install Doppler CLI
         uses: dopplerhq/cli-action@v3
